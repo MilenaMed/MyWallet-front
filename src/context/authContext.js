@@ -8,16 +8,16 @@ export const AuthContext = createContext(initContext);
 
 const AuthProvider = ({ children }) => {
     const [token, setToken] = useState();
+    const [user, setUser] = useState()
 
     const handleSetToken = (t) => {
-        console.log("Setando o token")
-        console.log(t)
         setToken(t)
-        console.log("Setando o token")
     }
-
+    const handleSetUser = (u) => {
+        setUser(u)
+    }
     return (
-        <AuthContext.Provider value={{token, handleSetToken}}>
+        <AuthContext.Provider value={{token, handleSetToken, user, handleSetUser}}>
             {children}
         </AuthContext.Provider>
     )

@@ -7,9 +7,8 @@ import axios from "axios"
 import { useContext } from "react";
 import { AuthContext } from "../context/authContext"
 
-export default function SignInPage() {
-  const { handleSetToken } = useContext(AuthContext);
-
+export default function SignInPage({setUsuario}) {
+  const { handleSetToken, handleSetUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -25,7 +24,8 @@ export default function SignInPage() {
       console.log("entrou promise")
       promise.then(response => {
         alert("Usuário logado")
-        handleSetToken(response.data)
+        handleSetToken(response.data.token)
+        handleSetUser(response.data.user)
         navigate('/home')
       })
       promise.catch((err) => {

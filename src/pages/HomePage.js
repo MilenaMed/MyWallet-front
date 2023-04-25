@@ -1,13 +1,49 @@
 import styled from "styled-components"
 import { BiExit } from "react-icons/bi"
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react"
+import { useContext } from "react";
+import axios from "axios"
+import { AuthContext } from "../context/authContext"
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai"
 
 export default function HomePage() {
+
+  const { token, user } = useContext(AuthContext);
+  const navigate = useNavigate()
+  const config = {
+    headers: {
+      "Authorization": `Bearer ${token}`
+    }
+  }
+
+  useEffect(() => {
+    const signinURL = "http://localhost:5000/home"
+
+    const promise = axios.get(signinURL, config)
+    promise.then((response) => {
+      console.log(response)
+
+    })
+  })
+
+  function paginaEntradas(event) {
+    navigate("/nova-transacao/:entrada")
+  }
+
+  function paginaSaidas(event) {
+    navigate("/nova-transacao/:saida")
+  }
+  function Deslogar(event) {
+    localStorage.clear();
+    navigate("/")
+  }
+
   return (
     <HomeContainer>
       <Header>
-        <h1>Olá, Fulano</h1>
-        <BiExit />
+        <h1>{`Olá, ${user}`}</h1>
+        <BiExit onClick={Deslogar} />
       </Header>
 
       <TransactionsContainer>
@@ -37,11 +73,11 @@ export default function HomePage() {
 
 
       <ButtonsContainer>
-        <button>
+        <button onClick={paginaEntradas}>
           <AiOutlinePlusCircle />
           <p>Nova <br /> entrada</p>
         </button>
-        <button>
+        <button onClick={paginaSaidas}>
           <AiOutlineMinusCircle />
           <p>Nova <br />saída</p>
         </button>
