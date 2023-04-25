@@ -51,13 +51,13 @@ export default function SignUpPage() {
         <input
           placeholder="Senha"
           type="password"
-          autocomplete="new-password"
+          autoComplete="new-password"
           required value={senha}
           onChange={(e) => setSenha(e.target.value)} />
         <input
           placeholder="Confirme a senha"
           type="password"
-          autocomplete="new-password"
+          autoComplete="new-password"
           required value={ConfirmaçãoSenha}
           onChange={(e) => setConfirmaçãoSenha(e.target.value)} />
         <button onClick={passarDados}>
