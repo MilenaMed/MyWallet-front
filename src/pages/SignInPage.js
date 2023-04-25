@@ -7,7 +7,7 @@ import axios from "axios"
 import { useContext } from "react";
 import { AuthContext } from "../context/authContext"
 
-export default function SignInPage({setUsuario}) {
+export default function SignInPage() {
   const { handleSetToken, handleSetUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -30,6 +30,7 @@ export default function SignInPage({setUsuario}) {
       })
       promise.catch((err) => {
         console.log(err)
+        alert("dados inválidos")
       })
     } else {
       alert("erro: preencha os dados corretamente")

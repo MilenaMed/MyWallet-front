@@ -8,7 +8,8 @@ export const AuthContext = createContext(initContext);
 
 const AuthProvider = ({ children }) => {
     const [token, setToken] = useState();
-    const [user, setUser] = useState()
+    const [user, setUser] = useState();
+    const [login, setLogin] = useState(false)
 
     const handleSetToken = (t) => {
         setToken(t)
@@ -16,8 +17,12 @@ const AuthProvider = ({ children }) => {
     const handleSetUser = (u) => {
         setUser(u)
     }
+
+    const handleSetLogin= (l) => {
+        setLogin(l)
+    }
     return (
-        <AuthContext.Provider value={{token, handleSetToken, user, handleSetUser}}>
+        <AuthContext.Provider value={{token, handleSetToken, user, handleSetUser, login, handleSetLogin}}>
             {children}
         </AuthContext.Provider>
     )

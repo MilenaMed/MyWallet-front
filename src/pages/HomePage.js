@@ -1,15 +1,14 @@
 import styled from "styled-components"
 import { BiExit } from "react-icons/bi"
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react"
-import { useContext } from "react";
+import { useContext, useEffect, useState} from "react"
 import axios from "axios"
 import { AuthContext } from "../context/authContext"
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai"
 
 export default function HomePage() {
-
-  const { token, user } = useContext(AuthContext);
+  const [usuario, setUsuario] = useState({})
+  const { token, user} = useContext(AuthContext);
   const navigate = useNavigate()
   const config = {
     headers: {
@@ -18,27 +17,28 @@ export default function HomePage() {
   }
 
   useEffect(() => {
+    if (!token) return navigate("/")
+
     const signinURL = "http://localhost:5000/home"
 
     const promise = axios.get(signinURL, config)
     promise.then((response) => {
-      console.log(response)
-
+      setUsuario(response.data)
     })
   })
 
   function paginaEntradas(event) {
-    navigate("/nova-transacao/:entrada")
+    navigate(`/nova-transacao/:${"entrada"}`)
   }
 
   function paginaSaidas(event) {
-    navigate("/nova-transacao/:saida")
-  }
-  function Deslogar(event) {
-    localStorage.clear();
-    navigate("/")
+    navigate(`/nova-transacao/:${"saida"}`)
   }
 
+  function Deslogar(event) {
+    localStorage.removeItem(token)
+    navigate("/")
+  }
   return (
     <HomeContainer>
       <Header>
@@ -85,6 +85,7 @@ export default function HomePage() {
 
     </HomeContainer>
   )
+
 }
 
 const HomeContainer = styled.div`
